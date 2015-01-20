@@ -1406,7 +1406,7 @@ ZwIDAQAB
     assert_failure response
   end
 
-  ## 11. Extendability, Locale
+  ## 11. Extendability, Locale, Store on Purchase
   #
 
   def test_successful_extendability
@@ -1442,6 +1442,24 @@ ZwIDAQAB
     })
     assert_failure response
     assert_equal "Ej beh\xC3\xB6rig", response.message
+  end
+
+  def test_successful_store_card_on_purchase
+    purchase = @gateway.purchase(@amount, @credit_card, @options.merge({
+        :order_id => generate_order_id,
+        :store_card => true
+    }))
+    assert_success purchase
+    assert (not purchase.params["stored_card"].nil?)
+  end
+
+  def test_successful_non_store_card_on_purchase
+    purchase = @gateway.purchase(@amount, @credit_card, @options.merge({
+        :order_id => generate_order_id,
+        :store_card => false
+    }))
+    assert_success purchase
+    assert purchase.params["stored_card"].nil?
   end
 
 end
