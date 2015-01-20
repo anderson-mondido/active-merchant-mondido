@@ -274,7 +274,8 @@ module ActiveMerchant #:nodoc:
         # - test
         # - authorize
         # - metadata
-        # - plan id
+        # - store_card
+        # - plan_id
         # - customer_ref
         # - webhook
         # - process
@@ -301,6 +302,10 @@ module ActiveMerchant #:nodoc:
           end
           post.merge!( :metadata => options[:metadata] ) 
         end
+
+        # Store Card (boolean)
+        #   true/false if you want to store the card
+        post.merge!( :store_card => options[:store_card] ) if options[:store_card]
 
         # Plan ID (int)
         #   The ID of the subscription plan.
