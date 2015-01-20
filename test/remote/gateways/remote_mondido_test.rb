@@ -41,8 +41,8 @@ class RemoteMondidoTest < Test::Unit::TestCase
       end
 
       unless @stored_card
-        card = api_request(@credit_card, @store_options)
-        @store_card = card["token"]
+        card = @gateway.store(@credit_card, @store_options)
+        @store_card = card.params["token"]
       end
     rescue
       raise "[Setup] Unable to get or create Stored Card Token"
